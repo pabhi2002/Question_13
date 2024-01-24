@@ -1,0 +1,20 @@
+import random
+from collections import defaultdict
+cities = ["Pune", "mumbai", "delhi", "nagpur", "nashik"]
+num_cities = 5
+num_users = 30
+num_visits_per_city = 100
+web_traffic=[]
+for city in cities:
+    for _ in range(num_visits_per_city):
+        user_id = random.randint(1, num_users)
+        time_of_day = random.choice(["morning", "noon", "evening", "night"])
+        time_spent_minutes = random.randint(1, 60)
+        web_traffic.append({"city": city, "user_id": user_id, "time_of_day": time_of_day, "time_spent_minutes": time_spent_minutes})
+city_time_of_day_count = defaultdict(lambda: defaultdict(int))
+time_of_day_user_count = defaultdict(int)
+for visit in web_traffic:
+    city_time_of_day_count[visit["city"]][visit["time_of_day"]] += 1
+    time_of_day_user_count[visit["time_of_day"]] += 1
+most_users_time_of_day = max(time_of_day_user_count, key=time_of_day_user_count.get)
+print(f"1. Time of day with the most number of unique users: {most_users_time_of_day}")
